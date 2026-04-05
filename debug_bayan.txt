@@ -1,0 +1,124 @@
+all_news count: 210
+search_results count 7
+  res: {'symbol': '7JL.F', 'name': 'Bayan Mining and Minerals Ltd.R', 'exchange': 'FRA'}
+  res: {'symbol': 'BYAN.JK', 'name': 'Bayan Resources Tbk', 'exchange': 'JKT'}
+  res: {'symbol': 'BNB.F', 'name': 'PT Bayan Resources Tbk        R', 'exchange': 'FRA'}
+  res: {'symbol': 'BMM.AX', 'name': 'BAYAN FPO [BMM]', 'exchange': 'ASX'}
+  res: {'symbol': 'BMM.XA', 'name': 'BAYAN FPO [BMM]', 'exchange': 'CXA'}
+  res: {'symbol': 'BNB.MU', 'name': 'PT Bayan Resources Tbk        R', 'exchange': 'MUN'}
+  res: {'symbol': 'BNB.SG', 'name': 'Bayan Resources Group', 'exchange': 'STU'}
+get_symbol_info BAYAN -> {'symbol': 'BAYAN', 'name': 'BAYAN', 'sector': 'N/A', 'industry': 'N/A', 'market_cap': 0, 'pe_ratio': None, 'pb_ratio': None, 'dividend_yield': None, '52w_high': None, '52w_low': None, 'description': ''}
+get_symbol_info BAYAN.JK -> {'symbol': 'BAYAN.JK', 'name': 'BAYAN.JK', 'sector': 'N/A', 'industry': 'N/A', 'market_cap': 0, 'pe_ratio': None, 'pb_ratio': None, 'dividend_yield': None, '52w_high': None, '52w_low': None, 'description': ''}
+candidates: {'BYAN.JK'}
+name_tokens sample: ['bayan', 'bayan resources tbk', 'bayan.jk']
+google queries: ['BAYAN', 'BAYAN saham', 'BAYAN tbk', 'bayan resources tbk', '"bayan resources tbk"', '"bayan resources tbk" saham']
+gq BAYAN -> fetched 30
+  title: Yadda China ta shiga matsala bayan ɓullo da tsarin taƙaitai haihuwa - BBC  symbols: []  matches?: False
+  title: Tinubu zai ziyarci Jos bayan harin da ya hallaka sama da mutane 27 - RFI  symbols: []  matches?: False
+  title: Bayan Muna seeks release of 2 arrested activists in Iloilo - Inquirer.net  symbols: []  matches?: False
+  title: Bayan Mining and Minerals Ltd Share Price - BMM, RNS News, Articles, Quotes, & Charts (ASX:BMM) - Proactive financial news  symbols: []  matches?: False
+  title: Jerin 'Yan Siyasar da Suka Shiga ADC bayan Sauya Shekar Kwankwaso - Legit News  symbols: []  matches?: False
+  title: Man, 71, killed at zebra crossing in Bayan Lepas - The Star  symbols: []  matches?: False
+  title: Bayan Mining Joins US Defense Industrial Base Consortium, Eyes Critical Minerals Funding - smallcaps.com.au  symbols: []  matches?: False
+  title: Elderly man dies after being hit by car in Bayan Lepas - NST Online  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: False accept_cond: True
+  title: Bayan Mining joins US defence consortium to target rare earths supply chain - Yahoo! Finance Canada  symbols: []  matches?: False
+  title: Rikici ya sake tashi a Jos bayan sassauta dokar hana fita - aminiya.ng  symbols: []  matches?: False
+  title: BMM yttrium upgrade attracts US defence - The Australian  symbols: []  matches?: False
+  title: PROPOSED: 43-storey serviced residences at Bayan Lepas - Penang Property Talk  symbols: []  matches?: False
+  title: 'Ba za a ga fuskata ba,' Mai Sana'a bayan rade radin masa duka kan Tinubu - Legit News  symbols: []  matches?: False
+  title: 'Yadda aka kama ni bayan sayen layin waya da ƴan bindiga suka taɓa amfani da shi' - BBC  symbols: []  matches?: False
+  title: "Ta zama siyasa": Atiku ya yi kaca-kaca da ziyarar Tinubu a Filato - Legit News  symbols: []  matches?: False
+  title: Mece ce makomar Kwankwasiyya bayan sauya shekar Kwankwaso? - BBC  symbols: []  matches?: False
+  title: Kura ta lafa a Iran bayan dakatar da zanga zanga - DW.com  symbols: []  matches?: False
+  title: "Ba ni da niyyar barin APC zuwa ADC": Tsohon Minista, Abdullahi Tijjani Gwarzo - Legit News  symbols: []  matches?: False
+  title: Tinubu ya umarci hafsoshin tsaro su zakulo wadanda suka kai hari a Plateau - Legit News  symbols: []  matches?: False
+  title: "Ana shirya zanga zanga"; ADC ta jefi gwamnatin APC da zargi - Legit News  symbols: []  matches?: False
+  title: Tinubu ya nada Dalhatu Abubakar shugaban hukumar kula da kasuwancin kasa, NCX - Legit News  symbols: []  matches?: False
+  title: Ganduje ya fito da bayanai kan tattaunawa da Tinubu a Abuja - Legit News  symbols: []  matches?: False
+  title: Harin ramuwar gayya ya rutsa da matashi ɗan NYSC a Jos, ya bar matarsa mai ciki - Legit News  symbols: []  matches?: False
+  title: Kwankwaso ya koma jam'iyyar ADC bayan fita daga NNPP - BBC  symbols: []  matches?: False
+  title: Yakin Iran zai raba alakar Amurka da Turai, Trump na barazanar barin NATO - Legit News  symbols: []  matches?: False
+  title: Kwankwaso: ADC ta fara ganin sauyi, masu rajista sun yiwa shafinta rubdugu - Legit News  symbols: []  matches?: False
+  title: Jami'an hukumar DSS sun cafke Nasir El Rufai a kotu - Legit News  symbols: []  matches?: False
+  title: 'Ba za mu iya kawo Kano babu Kwankwaso ba': Jigon APC, Alwan ya karaya - Legit News  symbols: []  matches?: False
+  title: "Karfin soja ba zai magance shirin nukiliyar Iran ba," Macron ga Amurka/Isra'ila - Legit News  symbols: []  matches?: False
+  title: Makomar Siriya shekara guda bayan mulkin Assad - DW.com  symbols: []  matches?: False
+gq BAYAN saham -> fetched 13
+  title: Jakarta & Indonesia Stock Exchange | Indonesia Finance Market - IDNFinancials.com  symbols: []  matches?: False
+  title: JCI jumps 5.02% at session I close, MYORA shares soar 12.63% - IDNFinancials.com  symbols: []  matches?: False
+  title: BYAN dissolves subsidiary in Australia - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: Conglomerate Low Tuck Kwong Disburses IDR 3.87 Billion, Increases Shareholding In Bayan Resources - VOI.id  symbols: []  matches?: False
+  title: Profil & Peta Koneksi Bisnis dan Politik 10 Oligark Batubara Terbesar di Indonesia di bawah Pemerintahan Jokowi - Project Multatuli  symbols: []  matches?: False
+  title: JCI Ends Stronger, Shares Of BYAN Owned By The Indonesian Coal King Low Tuck Kwong Soared 2.15 Percent - VOI.id  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: Four blue-chip stocks decline, IHSG weakens - IDNFinancials.com  symbols: ['^JKSE']  matches?: False
+  title: Mysterious 1,000% stock gains baffle traders in Indonesia - The Straits Times  symbols: []  matches?: False
+  title: Bayan Resources, Konglomerat-Owned Coal Company Low Tuck Kwong Raup Revenue Rp29.6 Trillion In Semester I 2022 - VOI.id  symbols: []  matches?: False
+  title: Low Tuck Kwong transferred shares to Elaine Low - IDNFinancials.com  symbols: []  matches?: False
+  title: Low Tuck Kwong Donated 22 Percent Of Bayan's Shares (BYAN) To His Son - VOI.id  symbols: []  matches?: True
+    has_fin: False has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: At the start of session I, IHSG corrected by 2.45% - IDNFinancials.com  symbols: ['^JKSE']  matches?: False
+  title: Chengdong Investment dan UBS Switzerland jual 500 juta saham BUMI - IDNFinancials.com  symbols: []  matches?: False
+gq BAYAN tbk -> fetched 30
+  title: Bayan Resources acquires coal terminal worth IDR 3.3 trillion - IDNFinancials.com  symbols: []  matches?: False
+  title: Bayan acquires coal terminal from subsidiary in a $202m transaction - Petromindo  symbols: []  matches?: False
+  title: BYAN net profit falls 7.3% in H1 2025 despite revenue growth - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: UNS Collaborates with PT Bayan Resources Tbk to Provide Scholarships for Students with Disabilities - Universitas Sebelas Maret  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: UGM Collaborates with PT Bayan Resources Tbk for Bayan Peduli Education Scholarship - ugm.ac.id  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: PT Bayan Resources Tbk. Reports Earnings Results for the Full Year Ended December 31, 2025 - MarketScreener  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: Bayan warns Q4 weather risks may impact 2025 coal output target - Petromindo  symbols: []  matches?: False
+  title: Coal miner BYAN to distribute final dividend of USD 400 million - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: True has_name_tok: False gq_has_fin_word: True accept_cond: True
+  title: MEMR yet to approve RKAB as rumors swirl that top coal miners may be spared cuts - Petromindo  symbols: []  matches?: False
+  title: Low Tuck Kwong sells almost 2 million BYAN shares - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: Bayan assigns unit to expand Balikpapan Coal Terminal - Petromindo  symbols: []  matches?: False
+  title: Chengdong divests 174 mn BUMI shares, remaining ownership at 6.78 - IDNFinancials.com  symbols: []  matches?: False
+  title: David Low Yi Ngo, son of Bayan boss Low Tuck Kwong, buys 9% Avillion - IDNFinancials.com  symbols: []  matches?: False
+  title: BYAN net profit rises 3.45% in the first quarter of 2025 - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: Low Tuck Kwong acquires 1.5 billion shares of Bayan Resources (BYAN) - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: Bayan Resources secures US$125 million loan facility from Bank Mega - IDNFinancials.com  symbols: []  matches?: False
+  title: Bayan Resources appoints former Attorney General as President Commissioner - IDNFinancials.com  symbols: []  matches?: False
+  title: Bayan Resources to distribute cash dividends of US$300 million - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: Bayan Resources’ net profit plummeted 49.7% this Q1 - IDNFinancials.com  symbols: []  matches?: False
+  title: Elaine Low receives 22% shareholding in Bayan Resources (BYAN) from Low Tuck Kwong - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: In Collaboration with PT Bayan Resources Tbk, UNDIP Covers Tuition Fees for 45 Students at Jepara and Batang Campuses Through a Scholarship Program - Universitas Diponegoro  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: PT Bayan Resources Tbk. Reports Earnings Results for the Nine Months Ended September 30, 2025 - MarketScreener  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: BYAN profit drops 25.5% in 2024, check out this year's projection! - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: UNDIP Carries Out Triple Helix Collaboration with PT Bayan Resources, Purnomo Yusgiantoro Foundation, and Dato' Dr. Low Tuck Kwong - Universitas Diponegoro  symbols: []  matches?: True
+    has_fin: True has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: BYAN dissolves subsidiary in Australia - IDNFinancials.com  symbols: []  matches?: True
+    has_fin: False has_name_tok: False gq_has_fin_word: True accept_cond: False
+  title: Bayan Resources Shuts Down Australian Unit in Corporate Streamlining - Jakarta Globe  symbols: []  matches?: False
+  title: Coal miner Bayan sues Indonesian investment chief over loss of land - Mongabay  symbols: []  matches?: False
+  title: The Meteoric Rise of Indonesia’s Bayan Resources - The Diplomat – Asia-Pacific Current Affairs Magazine  symbols: []  matches?: False
+  title: The Profits of Bayan Resources (BYAN) Plummeted by 43% to US$ 1.23 billion - KONTAN  symbols: []  matches?: True
+    has_fin: False has_name_tok: True gq_has_fin_word: True accept_cond: True
+  title: Coal Magnate Lim Chai Hock Named Among Forbes' Richest Indonesians in December 2024 - Tempo.co English  symbols: []  matches?: False
+filtered count 13
+-> Elderly man dies after being hit by car in Bayan Lepas - NST Online
+-> Low Tuck Kwong Donated 22 Percent Of Bayan's Shares (BYAN) To His Son - VOI.id
+-> UNS Collaborates with PT Bayan Resources Tbk to Provide Scholarships for Students with Disabilities - Universitas Sebelas Maret
+-> UGM Collaborates with PT Bayan Resources Tbk for Bayan Peduli Education Scholarship - ugm.ac.id
+-> PT Bayan Resources Tbk. Reports Earnings Results for the Full Year Ended December 31, 2025 - MarketScreener
+-> Coal miner BYAN to distribute final dividend of USD 400 million - IDNFinancials.com
+-> Low Tuck Kwong acquires 1.5 billion shares of Bayan Resources (BYAN) - IDNFinancials.com
+-> Bayan Resources to distribute cash dividends of US$300 million - IDNFinancials.com
+-> Elaine Low receives 22% shareholding in Bayan Resources (BYAN) from Low Tuck Kwong - IDNFinancials.com
+-> In Collaboration with PT Bayan Resources Tbk, UNDIP Covers Tuition Fees for 45 Students at Jepara and Batang Campuses Through a Scholarship Program - Universitas Diponegoro
+-> PT Bayan Resources Tbk. Reports Earnings Results for the Nine Months Ended September 30, 2025 - MarketScreener
+-> UNDIP Carries Out Triple Helix Collaboration with PT Bayan Resources, Purnomo Yusgiantoro Foundation, and Dato' Dr. Low Tuck Kwong - Universitas Diponegoro
+-> The Profits of Bayan Resources (BYAN) Plummeted by 43% to US$ 1.23 billion - KONTAN

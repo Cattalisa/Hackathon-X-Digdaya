@@ -1,0 +1,91 @@
+all_news count: 210
+search_results count 7
+  res: {'symbol': '7JL.F', 'name': 'Bayan Mining and Minerals Ltd.R', 'exchange': 'FRA'}
+  res: {'symbol': 'BYAN.JK', 'name': 'Bayan Resources Tbk', 'exchange': 'JKT'}
+  res: {'symbol': 'BNB.F', 'name': 'PT Bayan Resources Tbk        R', 'exchange': 'FRA'}
+  res: {'symbol': 'BMM.AX', 'name': 'BAYAN FPO [BMM]', 'exchange': 'ASX'}
+  res: {'symbol': 'BMM.XA', 'name': 'BAYAN FPO [BMM]', 'exchange': 'CXA'}
+  res: {'symbol': 'BNB.MU', 'name': 'PT Bayan Resources Tbk        R', 'exchange': 'MUN'}
+  res: {'symbol': 'BNB.SG', 'name': 'Bayan Resources Group', 'exchange': 'STU'}
+get_symbol_info BAYAN -> {'symbol': 'BAYAN', 'name': 'BAYAN', 'sector': 'N/A', 'industry': 'N/A', 'market_cap': 0, 'pe_ratio': None, 'pb_ratio': None, 'dividend_yield': None, '52w_high': None, '52w_low': None, 'description': ''}
+get_symbol_info BAYAN.JK -> {'symbol': 'BAYAN.JK', 'name': 'BAYAN.JK', 'sector': 'N/A', 'industry': 'N/A', 'market_cap': 0, 'pe_ratio': None, 'pb_ratio': None, 'dividend_yield': None, '52w_high': None, '52w_low': None, 'description': ''}
+candidates: {'BYAN.JK'}
+name_tokens sample: ['bayan.jk', 'bayan', 'bayan resources tbk']
+initial filtered count 0
+after extras count 0
+gq BAYAN -> fetched 30
+  ga: Yadda China ta shiga matsala bayan ɓullo da tsarin taƙaitai haihuwa - BBC symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Tinubu zai ziyarci Jos bayan harin da ya hallaka sama da mutane 27 - RFI symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Bayan Muna seeks release of 2 arrested activists in Iloilo - Inquirer.net symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Bayan Mining and Minerals Ltd Share Price - BMM, RNS News, Articles, Quotes, & Charts (ASX:BMM) - Proactive financial news symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Jerin 'Yan Siyasar da Suka Shiga ADC bayan Sauya Shekar Kwankwaso - Legit News symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Man, 71, killed at zebra crossing in Bayan Lepas - The Star symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Bayan Mining Joins US Defense Industrial Base Consortium, Eyes Critical Minerals Funding - smallcaps.com.au symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Elderly man dies after being hit by car in Bayan Lepas - NST Online symbols: [] matches?: True has_fin: True has_name_tok: True has_full_name: False
+    accept_cond: True
+  ga: Bayan Mining joins US defence consortium to target rare earths supply chain - Yahoo! Finance Canada symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Rikici ya sake tashi a Jos bayan sassauta dokar hana fita - aminiya.ng symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: BMM yttrium upgrade attracts US defence - The Australian symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: PROPOSED: 43-storey serviced residences at Bayan Lepas - Penang Property Talk symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Kura ta lafa a Iran bayan dakatar da zanga zanga - DW.com symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: 'Ba za a ga fuskata ba,' Mai Sana'a bayan rade radin masa duka kan Tinubu - Legit News symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: 'Yadda aka kama ni bayan sayen layin waya da ƴan bindiga suka taɓa amfani da shi' - BBC symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: "Ta zama siyasa": Atiku ya yi kaca-kaca da ziyarar Tinubu a Filato - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Mece ce makomar Kwankwasiyya bayan sauya shekar Kwankwaso? - BBC symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: "Ba ni da niyyar barin APC zuwa ADC": Tsohon Minista, Abdullahi Tijjani Gwarzo - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Tinubu ya umarci hafsoshin tsaro su zakulo wadanda suka kai hari a Plateau - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: "Ana shirya zanga zanga"; ADC ta jefi gwamnatin APC da zargi - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Tinubu ya nada Dalhatu Abubakar shugaban hukumar kula da kasuwancin kasa, NCX - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Ganduje ya fito da bayanai kan tattaunawa da Tinubu a Abuja - Legit News symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Kwankwaso ya koma jam'iyyar ADC bayan fita daga NNPP - BBC symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Harin ramuwar gayya ya rutsa da matashi ɗan NYSC a Jos, ya bar matarsa mai ciki - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Yakin Iran zai raba alakar Amurka da Turai, Trump na barazanar barin NATO - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Kwankwaso: ADC ta fara ganin sauyi, masu rajista sun yiwa shafinta rubdugu - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Jami'an hukumar DSS sun cafke Nasir El Rufai a kotu - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: 'Ba za mu iya kawo Kano babu Kwankwaso ba': Jigon APC, Alwan ya karaya - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: "Karfin soja ba zai magance shirin nukiliyar Iran ba," Macron ga Amurka/Isra'ila - Legit News symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Makomar Siriya shekara guda bayan mulkin Assad - DW.com symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+gq BAYAN saham -> fetched 13
+  ga: Jakarta & Indonesia Stock Exchange | Indonesia Finance Market - IDNFinancials.com symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: JCI jumps 5.02% at session I close, MYORA shares soar 12.63% - IDNFinancials.com symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: BYAN dissolves subsidiary in Australia - IDNFinancials.com symbols: [] matches?: True has_fin: False has_name_tok: False has_full_name: False
+    accept_cond: False
+  ga: Conglomerate Low Tuck Kwong Disburses IDR 3.87 Billion, Increases Shareholding In Bayan Resources - VOI.id symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Profil & Peta Koneksi Bisnis dan Politik 10 Oligark Batubara Terbesar di Indonesia di bawah Pemerintahan Jokowi - Project Multatuli symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: JCI Ends Stronger, Shares Of BYAN Owned By The Indonesian Coal King Low Tuck Kwong Soared 2.15 Percent - VOI.id symbols: [] matches?: True has_fin: False has_name_tok: False has_full_name: False
+    accept_cond: False
+  ga: Four blue-chip stocks decline, IHSG weakens - IDNFinancials.com symbols: ['^JKSE'] matches?: False has_fin: True has_name_tok: False has_full_name: False
+  ga: Mysterious 1,000% stock gains baffle traders in Indonesia - The Straits Times symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Bayan Resources, Konglomerat-Owned Coal Company Low Tuck Kwong Raup Revenue Rp29.6 Trillion In Semester I 2022 - VOI.id symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Low Tuck Kwong transferred shares to Elaine Low - IDNFinancials.com symbols: [] matches?: False has_fin: False has_name_tok: False has_full_name: False
+  ga: Low Tuck Kwong Donated 22 Percent Of Bayan's Shares (BYAN) To His Son - VOI.id symbols: [] matches?: True has_fin: False has_name_tok: True has_full_name: False
+    accept_cond: False
+  ga: At the start of session I, IHSG corrected by 2.45% - IDNFinancials.com symbols: ['^JKSE'] matches?: False has_fin: True has_name_tok: False has_full_name: False
+  ga: Chengdong Investment dan UBS Switzerland jual 500 juta saham BUMI - IDNFinancials.com symbols: [] matches?: False has_fin: True has_name_tok: False has_full_name: False
+gq BAYAN tbk -> fetched 30
+  ga: Bayan Resources acquires coal terminal worth IDR 3.3 trillion - IDNFinancials.com symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Bayan acquires coal terminal from subsidiary in a $202m transaction - Petromindo symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: BYAN net profit falls 7.3% in H1 2025 despite revenue growth - IDNFinancials.com symbols: [] matches?: True has_fin: False has_name_tok: False has_full_name: False
+    accept_cond: False
+  ga: UNS Collaborates with PT Bayan Resources Tbk to Provide Scholarships for Students with Disabilities - Universitas Sebelas Maret symbols: [] matches?: True has_fin: True has_name_tok: True has_full_name: True
+    accept_cond: True
+  ga: UGM Collaborates with PT Bayan Resources Tbk for Bayan Peduli Education Scholarship - ugm.ac.id symbols: [] matches?: True has_fin: True has_name_tok: True has_full_name: True
+    accept_cond: True
+  ga: PT Bayan Resources Tbk. Reports Earnings Results for the Full Year Ended December 31, 2025 - MarketScreener symbols: [] matches?: True has_fin: True has_name_tok: True has_full_name: True
+    accept_cond: True
+  ga: Bayan warns Q4 weather risks may impact 2025 coal output target - Petromindo symbols: [] matches?: False has_fin: False has_name_tok: True has_full_name: False
+  ga: Coal miner BYAN to distribute final dividend of USD 400 million - IDNFinancials.com symbols: [] matches?: True has_fin: True has_name_tok: False has_full_name: False
+    accept_cond: True
+after google fallback count 5
+before prune count 5
+prune check for Elderly man dies after being hit by car in Bayan Lepas - NST Online has_fin True has_name True has_full_name False
+prune check for UNS Collaborates with PT Bayan Resources Tbk to Provide Scholarships for Students with Disabilities - Universitas Sebelas Maret has_fin True has_name True has_full_name True
+prune check for UGM Collaborates with PT Bayan Resources Tbk for Bayan Peduli Education Scholarship - ugm.ac.id has_fin True has_name True has_full_name True
+prune check for PT Bayan Resources Tbk. Reports Earnings Results for the Full Year Ended December 31, 2025 - MarketScreener has_fin True has_name True has_full_name True
+prune check for Coal miner BYAN to distribute final dividend of USD 400 million - IDNFinancials.com has_fin True has_name False has_full_name False
+after prune count 5
+-> Elderly man dies after being hit by car in Bayan Lepas - NST Online
+-> UNS Collaborates with PT Bayan Resources Tbk to Provide Scholarships for Students with Disabilities - Universitas Sebelas Maret
+-> UGM Collaborates with PT Bayan Resources Tbk for Bayan Peduli Education Scholarship - ugm.ac.id
+-> PT Bayan Resources Tbk. Reports Earnings Results for the Full Year Ended December 31, 2025 - MarketScreener
+-> Coal miner BYAN to distribute final dividend of USD 400 million - IDNFinancials.com
