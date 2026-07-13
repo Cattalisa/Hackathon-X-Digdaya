@@ -9,11 +9,13 @@ import json
 import asyncio
 import logging
 import threading
+import subprocess
 import schedule
 import time
 from datetime import datetime
 from typing import List, Optional
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -63,11 +65,108 @@ logging.basicConfig(
 )
 logger = logging.getLogger("nusaterminal")
 
+# ─── AGENT INSTANCES ──────────────────────────────────────────────────────────
+# Akan diinisialisasi saat startup setelah Deno API berjalan
+market_agent = None
+sentiment_agent = None
+prediction_agent = None
+chatbot = None
+
+# ─── DENO PROCESS ─────────────────────────────────────────────────────────────
+deno_process = None
+
+# ─── SCHEDULER ────────────────────────────────────────────────────────────────
+def run_scheduler():
+    """Background thread untuk periodic refresh."""
+    interval = int(os.getenv("NEWS_REFRESH_INTERVAL_MINUTES", "15"))
+
+    def safe_refresh():
+        """Safely refresh chatbot — guard against None (startup race)."""
+        if chatbot is not None:
+            try:
+                chatbot.refresh_knowledge_base()
+                logger.info("🔄 Scheduled refresh done")
+            except Exception as e:
+                logger.error(f"Scheduler refresh error: {e}")
+        else:
+            logger.warning("⚠️ Scheduler: chatbot not yet initialized, skipping refresh")
+
+    def safe_scrape():
+        """Jalankan Deno IDX scraper untuk mengupdate database lokal secara periodik."""
+        try:
+            logger.info("🔄 Memulai update data bursa (Deno Scraper)...")
+            deno_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'idx_scraper'))
+            subprocess.run(
+                ["deno", "run", "-A", "auto_sync.ts"],
+                cwd=deno_dir,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=180
+            )
+            logger.info("✅ Update data bursa selesai")
+        except Exception as e:
+            logger.error(f"Scheduler scraper error: {e}")
+
+    schedule.every(interval).minutes.do(safe_refresh)
+    schedule.every(interval).minutes.do(safe_scrape)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """FastAPI lifespan context manager — startup + shutdown logic."""
+    global deno_process, market_agent, sentiment_agent, prediction_agent, chatbot
+    logger.info("🚀 NusaTerminal API starting...")
+
+    # Auto-start Deno API
+    try:
+        deno_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'idx_scraper'))
+        deno_cmd = [
+            "deno", "run", "--allow-net", "--allow-read", "--allow-env", "--allow-write", "src/api/Server.ts"
+        ]
+        deno_process = subprocess.Popen(
+            deno_cmd,
+            cwd=deno_dir,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info("✅ Deno API server started in background")
+        await asyncio.sleep(3)  # Non-blocking wait — beri waktu Deno untuk siap
+    except Exception as e:
+        logger.error(f"❌ Failed to start Deno API server: {e}")
+
+    # Initialize Agents now that Deno is running
+    logger.info("🤖 Menginisialisasi AI Agents...")
+    market_agent = MarketAgent()
+    sentiment_agent = get_sentiment_agent()
+    prediction_agent = QuantPredictionAgent()
+    chatbot = RAGChatbot()
+
+    # Start Scheduler
+    scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
+    scheduler_thread.start()
+    logger.info("✅ Scheduler aktif — knowledge base akan diperbarui secara periodik")
+
+    yield  # Application is running here
+
+    # ── Shutdown ────────────────────────────────────────────────────────────
+    if deno_process:
+        logger.info("🛑 Shutting down Deno API server...")
+        deno_process.terminate()
+        try:
+            deno_process.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            deno_process.kill()
+        logger.info("✅ Deno API server stopped")
+
 # ─── APP ──────────────────────────────────────────────────────────────────────
 app = FastAPI(
     title="NusaTerminal API",
     description="Bloomberg Terminal untuk Investor Ritel Indonesia — Powered by AI",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 app.add_middleware(
@@ -78,32 +177,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ─── AGENT INSTANCES ──────────────────────────────────────────────────────────
-# Inisialisasi semua agent saat startup
-market_agent = MarketAgent()
-sentiment_agent = get_sentiment_agent()  # Singleton — satu instance untuk seluruh app
-prediction_agent = QuantPredictionAgent()
-chatbot = RAGChatbot()                  # RAG-based chatbot
-
-
-# ─── SCHEDULER ────────────────────────────────────────────────────────────────
-def run_scheduler():
-    """Background thread untuk periodic refresh."""
-    interval = int(os.getenv("NEWS_REFRESH_INTERVAL_MINUTES", "15"))
-    schedule.every(interval).minutes.do(chatbot.refresh_knowledge_base)
-    schedule.every(interval).minutes.do(lambda: logger.info("🔄 Scheduled refresh done"))
-
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
-
-@app.on_event("startup")
-async def startup_event():
-    """Jalankan scheduler di background thread saat startup."""
-    logger.info("🚀 NusaTerminal API starting...")
-    scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
-    scheduler_thread.start()
-    logger.info("✅ Scheduler aktif — knowledge base akan diperbarui secara periodik")
 
 
 # ─── ENDPOINTS ────────────────────────────────────────────────────────────────
@@ -122,8 +195,8 @@ def root():
 def health_check():
     return {
         "status": "healthy",
-        "sentiment_model": sentiment_agent.model_name,
-        "chatbot_stats": chatbot.get_stats(),
+        "sentiment_model": getattr(sentiment_agent, 'model_name', 'loading...'),
+        "chatbot_stats": chatbot.get_stats() if chatbot else {"status": "initializing"},
         "timestamp": datetime.now()
     }
 
@@ -197,7 +270,8 @@ def get_historical(symbol: str, period: str = "1mo"):
     hist = ds.get_historical_data(symbol, period)
     if hist.empty:
         raise HTTPException(status_code=404, detail=f"Data historis untuk {symbol} tidak ditemukan")
-    return hist.reset_index().to_dict(orient="records")
+    hist_dict = hist.reset_index().to_dict(orient="records")
+    return safe_response(hist_dict)
 
 
 # ── Sentiment Endpoints ───────────────────────────────────────────────────────

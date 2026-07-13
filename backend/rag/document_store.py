@@ -183,12 +183,18 @@ class RAGDocumentStore:
         try:
             query_embedding = self._embed([query])
 
+            # Guard: empty collection would crash ChromaDB
+            collection_count = self.news_collection.count()
+            if collection_count == 0:
+                return []
+
             # Build where clause untuk filter
             where_clause = {"type": "news"}
 
+            actual_n = max(1, min(n_results, collection_count))
             results = self.news_collection.query(
                 query_embeddings=query_embedding,
-                n_results=min(n_results, self.news_collection.count() or 1),
+                n_results=actual_n,
                 where=where_clause,
                 include=["documents", "metadatas", "distances"]
             )

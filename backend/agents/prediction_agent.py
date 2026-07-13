@@ -372,16 +372,10 @@ class QuantPredictionAgent:
         else:
             vol_score = price_direction * 0.2
 
-        # On-Balance Volume (OBV) trend
+        # On-Balance Volume (OBV) trend — vectorized (lebih cepat dari loop)
         if len(hist) >= 5:
-            obv = pd.Series(0.0, index=hist.index)
-            for i in range(1, len(hist)):
-                if hist["Close"].iloc[i] > hist["Close"].iloc[i - 1]:
-                    obv.iloc[i] = obv.iloc[i - 1] + hist["Volume"].iloc[i]
-                elif hist["Close"].iloc[i] < hist["Close"].iloc[i - 1]:
-                    obv.iloc[i] = obv.iloc[i - 1] - hist["Volume"].iloc[i]
-                else:
-                    obv.iloc[i] = obv.iloc[i - 1]
+            direction = np.sign(hist["Close"].diff().fillna(0))
+            obv = (direction * hist["Volume"]).cumsum()
 
             obv_5d_change = obv.iloc[-1] - obv.iloc[-5]
             if obv_5d_change > 0:

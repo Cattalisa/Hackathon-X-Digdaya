@@ -83,6 +83,7 @@ class RAGChatbot:
     def _init_llm(self):
         """Inisialisasi DeepSeek API sebagai LLM generator (OpenAI-compatible)."""
         api_key = os.getenv("DEEPSEEK_API_KEY")
+        self.llm_model = "none"  # Default; akan di-override jika API key valid
         if not api_key:
             logger.warning(
                 "DEEPSEEK_API_KEY tidak ditemukan. "
@@ -284,7 +285,7 @@ class RAGChatbot:
 
     def _fallback_response(self, prompt: str) -> str:
         """
-        Fallback jika Gemini tidak tersedia.
+        Fallback jika DeepSeek tidak tersedia.
         Tetap gunakan konteks yang di-retrieve, tapi format secara manual.
         """
         return (

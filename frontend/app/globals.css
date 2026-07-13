@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Epic Design: Dark Cinematic Terminal */
+    --background: 0 0% 4%; /* #0A0A0A Rich Black */
+    --foreground: 0 0% 96%; /* #F5F5F5 */
+    
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 96%;
+    
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 96%;
+    
+    --primary: 76 100% 50%; /* #CCFF00 Acid Green for Positive/Up */
+    --primary-foreground: 0 0% 4%;
+    
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 96%;
+    
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    
+    --accent: 76 100% 50%;
+    --accent-foreground: 0 0% 4%;
+    
+    --destructive: 0 100% 60%; /* #FF3333 Vermilion Red for Negative/Down */
+    --destructive-foreground: 0 0% 96%;
+    
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 76 100% 50%;
+    
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-lg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
