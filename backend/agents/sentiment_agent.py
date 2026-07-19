@@ -141,7 +141,7 @@ class SentimentAgent:
         # FIX-1: Signal bahwa loading selesai (berhasil atau gagal)
         self._model_ready_event.set()
 
-    def ensure_model_loaded(self, timeout: int = 120):
+    def ensure_model_loaded(self, timeout: int = 2):
         """
         Tunggu sampai model siap (max timeout detik).
         FIX-1: Menggunakan threading.Event.wait() yang benar.

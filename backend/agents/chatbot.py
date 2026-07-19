@@ -81,28 +81,50 @@ class RAGChatbot:
         self._sync_news_to_vectorstore()
 
     def _init_llm(self):
-        """Inisialisasi DeepSeek API sebagai LLM generator (OpenAI-compatible)."""
-        api_key = os.getenv("DEEPSEEK_API_KEY")
-        self.llm_model = "none"  # Default; akan di-override jika API key valid
-        if not api_key:
-            logger.warning(
-                "DEEPSEEK_API_KEY tidak ditemukan. "
-                "Set environment variable DEEPSEEK_API_KEY untuk mengaktifkan LLM."
-            )
-            self.client = None
-            return
+        """Inisialisasi semua LLM generator yang tersedia."""
+        self.clients = {}
+        
+        openai_key = os.getenv("OPENAI_API_KEY")
+        gemini_key = os.getenv("GEMINI_API_KEY")
+        deepseek_key = os.getenv("DEEPSEEK_API_KEY")
 
         try:
-            # DeepSeek menggunakan OpenAI-compatible API
-            self.client = OpenAI(
-                api_key=api_key,
-                base_url="https://api.deepseek.com/v1",
-            )
-            self.llm_model = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
-            logger.info(f"✅ DeepSeek LLM berhasil diinisialisasi (model: {self.llm_model})")
+            if openai_key:
+                from openai import OpenAI
+                client = OpenAI(api_key=openai_key)
+                model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+                self.clients["openai"] = {"client": client, "model": model}
+                logger.info(f"✅ OpenAI LLM berhasil diinisialisasi (model: {model})")
+                
+            if gemini_key:
+                try:
+                    import google.generativeai as genai
+                except ImportError:
+                    from google import genai
+                
+                if 'google.generativeai' in sys.modules:
+                    genai.configure(api_key=gemini_key)
+                    client = genai
+                else:
+                    client = genai.Client(api_key=gemini_key)
+                    
+                model = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+                self.clients["gemini"] = {"client": client, "model": model}
+                logger.info(f"✅ Gemini LLM berhasil diinisialisasi (model: {model})")
+
+            if deepseek_key and "openai" not in self.clients:
+                # DeepSeek hanya sebagai fallback jika OpenAI asli tidak ada
+                from openai import OpenAI
+                client = OpenAI(api_key=deepseek_key, base_url="https://api.deepseek.com/v1")
+                model = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+                self.clients["openai"] = {"client": client, "model": model} # Alias as openai for processing
+                logger.info(f"✅ DeepSeek LLM berhasil diinisialisasi (model: {model})")
+                
+            if not self.clients:
+                logger.warning("Tidak ada API Key yang ditemukan. Set OPENAI_API_KEY, GEMINI_API_KEY, atau DEEPSEEK_API_KEY.")
+                
         except Exception as e:
-            logger.error(f"Error inisialisasi DeepSeek: {e}")
-            self.client = None
+            logger.error(f"Error inisialisasi LLM: {e}")
 
     def _sync_news_to_vectorstore(self):
         """
@@ -200,16 +222,19 @@ class RAGChatbot:
 
         return None
 
-    def _retrieve_context(self, query: str) -> Dict[str, Any]:
+    def _retrieve_context(self, query: str, provided_symbol: Optional[str] = None) -> Dict[str, Any]:
         """
         Core RAG retrieval: cari dokumen relevan dari vector store.
         
         Returns dict dengan:
         - news_docs: berita relevan
         - market_docs: data pasar relevan
-        - detected_symbol: simbol yang terdeteksi dari query
+        - detected_symbol: simbol yang terdeteksi dari query atau context
         """
         detected_symbol = self._extract_symbol_from_query(query)
+        if not detected_symbol and provided_symbol:
+            # Format to XXXX.JK if needed, but it should already be from frontend
+            detected_symbol = provided_symbol
 
         # Retrieve berita relevan
         news_docs = self.doc_store.retrieve_relevant_news(
@@ -266,33 +291,94 @@ class RAGChatbot:
 
     # ─── GENERATION ────────────────────────────────────────────────────────────
 
+    def _generate_single_llm(self, provider: str, prompt: str) -> str:
+        """Helper function untuk generate respon dari satu LLM secara terpisah."""
+        if provider not in self.clients:
+            return "Tidak tersedia."
+            
+        client = self.clients[provider]["client"]
+        model = self.clients[provider]["model"]
+        
+        try:
+            if provider == "openai":
+                response = client.chat.completions.create(
+                    model=model,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.3,
+                    max_tokens=1024,
+                )
+                return response.choices[0].message.content
+                
+            elif provider == "gemini":
+                if hasattr(client, 'GenerativeModel'):
+                    model_obj = client.GenerativeModel(model)
+                    response = model_obj.generate_content(
+                        prompt,
+                        generation_config={"temperature": 0.3, "max_output_tokens": 1024}
+                    )
+                    return response.text
+                else:
+                    response = client.models.generate_content(
+                        model=model,
+                        contents=prompt,
+                    )
+                    return response.text
+        except Exception as e:
+            logger.error(f"Error {provider} generation: {e}")
+            return f"Maaf, {provider} mengalami gangguan."
+
     def _generate_with_llm(self, prompt: str) -> str:
-        """Generate respons menggunakan DeepSeek LLM."""
-        if not self.client:
+        """Generate respons menggunakan kolaborasi LLM (jika keduanya ada)."""
+        if not self.clients:
             return self._fallback_response(prompt)
 
-        try:
-            response = self.client.chat.completions.create(
-                model=self.llm_model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
-                max_tokens=1024,
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            logger.error(f"Error DeepSeek generation: {e}")
-            return self._fallback_response(prompt)
+        import concurrent.futures
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_openai = executor.submit(self._generate_single_llm, "openai", prompt) if "openai" in self.clients else None
+            future_gemini = executor.submit(self._generate_single_llm, "gemini", prompt) if "gemini" in self.clients else None
+            
+            openai_resp = future_openai.result() if future_openai else None
+            gemini_resp = future_gemini.result() if future_gemini else None
+
+        # Jika hanya satu yang tersedia, kembalikan langsung
+        if openai_resp and not gemini_resp:
+            return openai_resp
+        if gemini_resp and not openai_resp:
+            return gemini_resp
+            
+        # Jika keduanya ada, buat konsensus menggunakan OpenAI
+        consensus_prompt = (
+            "Berikut adalah dua pendapat ahli investasi terkait pasar modal berdasarkan konteks berita yang sama:\n\n"
+            f"=== OPINI OPENAI ===\n{openai_resp}\n\n"
+            f"=== OPINI GEMINI ===\n{gemini_resp}\n\n"
+            "Tugasmu: Sebagai Hakim NusaAI, rumuskan satu kesimpulan akhir yang paling masuk akal, objektif, "
+            "dan singkat dari kedua pendapat di atas. Jangan memihak, gabungkan insight terbaik dari keduanya."
+        )
+        
+        consensus_resp = self._generate_single_llm("openai", consensus_prompt)
+
+        # Format output kolaborasi
+        final_output = (
+            "🤖 **Analisis ChatGPT (OpenAI):**\n"
+            f"{openai_resp.strip()}\n\n"
+            "⚡ **Analisis Gemini:**\n"
+            f"{gemini_resp.strip()}\n\n"
+            "🤝 **Konsensus NusaAI:**\n"
+            f"{consensus_resp.strip()}"
+        )
+        return final_output
 
     def _fallback_response(self, prompt: str) -> str:
         """
-        Fallback jika DeepSeek tidak tersedia.
+        Fallback jika LLM tidak tersedia.
         Tetap gunakan konteks yang di-retrieve, tapi format secara manual.
         """
         return (
             "Maaf, layanan AI sedang tidak tersedia. "
             "Namun berdasarkan berita terkini yang tersedia di database, "
             "kamu bisa mengecek langsung di tab Berita atau Dashboard Sentimen. "
-            "\n\n⚠️ Pastikan DEEPSEEK_API_KEY sudah dikonfigurasi di file .env"
+            "\n\n⚠️ Pastikan API KEY (OPENAI_API_KEY / GEMINI_API_KEY / DEEPSEEK_API_KEY) sudah dikonfigurasi di environment atau file .env"
         )
 
     # ─── MAIN INTERFACE ────────────────────────────────────────────────────────
@@ -318,7 +404,8 @@ class RAGChatbot:
             )
 
         # 1. Retrieve konteks dari vector store
-        context = self._retrieve_context(user_query)
+        provided_symbol = message.context.get("symbol") if message.context else None
+        context = self._retrieve_context(user_query, provided_symbol=provided_symbol)
         news_docs = context["news_docs"]
         market_docs = context["market_docs"]
         detected_symbol = context["detected_symbol"]
@@ -364,6 +451,6 @@ class RAGChatbot:
         """Statistik RAG system."""
         return {
             "vector_store": self.doc_store.get_collection_stats(),
-            "llm_active": self.client is not None,
-            "llm_model": self.llm_model if hasattr(self, "llm_model") and self.client else "none",
+            "llm_active": len(self.clients) > 0,
+            "llm_models": [info["model"] for info in self.clients.values()],
         }

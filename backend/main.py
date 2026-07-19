@@ -95,7 +95,7 @@ def run_scheduler():
         """Jalankan Deno IDX scraper untuk mengupdate database lokal secara periodik."""
         try:
             logger.info("🔄 Memulai update data bursa (Deno Scraper)...")
-            deno_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'idx_scraper'))
+            deno_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'IDX-API'))
             subprocess.run(
                 ["deno", "run", "-A", "auto_sync.ts"],
                 cwd=deno_dir,
@@ -122,7 +122,7 @@ async def lifespan(app: FastAPI):
 
     # Auto-start Deno API
     try:
-        deno_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'idx_scraper'))
+        deno_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'IDX-API'))
         deno_cmd = [
             "deno", "run", "--allow-net", "--allow-read", "--allow-env", "--allow-write", "src/api/Server.ts"
         ]

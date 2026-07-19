@@ -12,6 +12,7 @@ import logging
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional
 from email.utils import parsedate_to_datetime
+import concurrent.futures
 
 import aiohttp
 import asyncio
@@ -268,7 +269,9 @@ class NewsService:
         articles = []
 
         try:
-            feed = feedparser.parse(rss_url)
+            import requests
+            resp = requests.get(rss_url, timeout=3)
+            feed = feedparser.parse(resp.content)
 
             for entry in feed.entries[:max_per_feed]:
                 try:
@@ -362,10 +365,22 @@ class NewsService:
 
         # Ambil lebih banyak artikel per feed agar tersedia lebih banyak kandidat
         max_per_feed = max_per_feed_override if max_per_feed_override is not None else DEFAULT_MAX_PER_FEED
-        for source_key, rss_url in RSS_FEEDS.items():
-            articles = self._parse_feed(source_key, rss_url, max_per_feed=max_per_feed)
-            all_articles.extend(articles)
-            logger.debug(f"  {source_key}: {len(articles)} artikel (max_per_feed={max_per_feed})")
+        
+        # Eksekusi Paralel menggunakan ThreadPoolExecutor
+        def fetch_task(source_item):
+            src_key, url = source_item
+            arts = self._parse_feed(src_key, url, max_per_feed=max_per_feed)
+            return src_key, arts
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(12, len(RSS_FEEDS))) as executor:
+            futures = [executor.submit(fetch_task, item) for item in RSS_FEEDS.items()]
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    src_key, arts = future.result()
+                    all_articles.extend(arts)
+                    logger.debug(f"  {src_key}: {len(arts)} artikel (max_per_feed={max_per_feed})")
+                except Exception as e:
+                    logger.warning(f"Error executing fetch_task: {e}")
 
         # Deduplikasi berdasarkan ID
         seen_ids = set()
@@ -407,7 +422,7 @@ class NewsService:
             try:
                 from ..agents.sentiment_agent import get_sentiment_agent
                 sentiment_agent = get_sentiment_agent()
-                sentiment_agent.ensure_model_loaded(timeout=60)
+                sentiment_agent.ensure_model_loaded(timeout=2)
             except Exception:
                 pass
 
